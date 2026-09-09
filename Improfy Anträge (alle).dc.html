@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  doc-page:not(:defined){visibility:hidden}
+  body{margin:0;font-family:Manrope,'Helvetica Neue',Arial,sans-serif;color:#000000;-webkit-font-smoothing:antialiased}
+  doc-page p{orphans:3;widows:3}
+  a{color:#000000}
+  a:hover{color:#000000}
+  doc-page input{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  doc-page input[type=text]::placeholder{color:#6b6b6b;font-weight:500}
+  @media print{
+    doc-page input[type=text]{background:#fff !important}
+    [data-export]{display:none !important}
+  }
+</style>
+<script src="./doc-page.js"></script>
+</helmet>
+<div data-export="1" style="position:sticky;top:0;z-index:60;background:#000000;color:#ffffff;padding:10px 14px;display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+  <img src="assets/improfy-logo-trim.png" alt="Improfy" style="height:18px;width:auto;display:block;filter:invert(1)">
+  <div style="display:flex;gap:6px;align-items:center">
+    <button type="button" onClick="{{ pickSteps }}" style="border:1px solid #ffffff;border-radius:0;font-family:inherit;font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;padding:8px 12px;cursor:pointer;color:{{ v.stepsFg }};background:{{ v.stepsBg }}">AVGS · 4Steps</button>
+    <button type="button" onClick="{{ pickK16 }}" style="border:1px solid #ffffff;border-radius:0;font-family:inherit;font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;padding:8px 12px;cursor:pointer;color:{{ v.k16Fg }};background:{{ v.k16Bg }}">§ 16k · AllCare</button>
+  </div>
+  <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+    <button type="button" onClick="{{ pickKoeln }}" style="border:1px solid #ffffff;border-radius:0;font-family:inherit;font-size:11px;font-weight:700;padding:8px 12px;cursor:pointer;color:{{ v.koelnFg }};background:{{ v.koelnBg }}">Köln</button>
+    <button type="button" onClick="{{ pickHamburg }}" style="border:1px solid #ffffff;border-radius:0;font-family:inherit;font-size:11px;font-weight:700;padding:8px 12px;cursor:pointer;color:{{ v.hamburgFg }};background:{{ v.hamburgBg }}">Hamburg</button>
+    <button type="button" onClick="{{ pickMannheim }}" style="border:1px solid #ffffff;border-radius:0;font-family:inherit;font-size:11px;font-weight:700;padding:8px 12px;cursor:pointer;color:{{ v.mannheimFg }};background:{{ v.mannheimBg }}">Mannheim</button>
+    <button type="button" onClick="{{ pickFrankfurt }}" style="border:1px solid #ffffff;border-radius:0;font-family:inherit;font-size:11px;font-weight:700;padding:8px 12px;cursor:pointer;color:{{ v.frankfurtFg }};background:{{ v.frankfurtBg }}">Frankfurt</button>
+  </div>
+  <button type="button" onClick="{{ exportPdf }}" style="margin-left:auto;border:0;border-radius:0;background:#84faa1;color:#000000;font-family:inherit;font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;padding:9px 14px;cursor:pointer">{{ btnLabel }}</button>
+</div>
+<doc-page size="a4" margin="13mm">
+  <div slot="header" style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding-bottom:9px;border-bottom:3px solid #84faa1">
+    <img src="assets/improfy-logo-trim.png" alt="Improfy" style="height:19px;width:auto;display:block">
+    <div style="font-size:10.5px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#000000;padding-bottom:3px">{{ v.kicker }}</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:16px">
+    <div>
+      <div style="font-size:10.5px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#000000;padding-bottom:6px;border-bottom:2px solid #84faa1;margin-bottom:10px">Antragsteller*in</div>
+      <div style="display:grid;gap:6px">
+        <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">Name, Vorname</div><input type="text" name="name" data-f="name" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+        <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">Straße, Hausnummer</div><input type="text" name="strasse" data-f="strasse" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+        <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">PLZ, Stadt</div><input type="text" name="plzstadt" data-f="plzstadt" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+        <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">E-Mail</div><input type="text" name="mail" data-f="mail" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">Kundennummer</div><input type="text" name="kundennr" data-f="kundennr" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+          <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">Geburtsdatum</div><input type="text" name="geburt" data-f="geburt" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:10.5px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#000000;padding-bottom:6px;border-bottom:2px solid #84faa1;margin-bottom:10px">Empfänger</div>
+      <div style="display:grid;gap:6px">
+        <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">Jobcenter / Agentur für Arbeit</div><input type="text" name="jobcenter" data-f="jobcenter" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+        <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">Straße, Hausnummer</div><input type="text" name="jc_strasse" data-f="jc_strasse" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+        <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">PLZ, Stadt</div><input type="text" name="jc_plzstadt" data-f="jc_plzstadt" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">Ort</div><input type="text" name="ort" data-f="ort" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+          <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">Datum</div><input type="text" name="datum" data-f="datum" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h1 style="font-size:23px;line-height:1.15;font-weight:800;letter-spacing:-0.02em;margin:12px 0 0;color:#000000">{{ v.title }}</h1>
+  <div style="font-size:12px;font-weight:700;color:#000000;margin-top:6px">{{ v.sub }}</div>
+  <div style="height:2px;background:#e6e5e6;margin:10px 0 12px"></div>
+
+  <p style="font-size:12.5px;line-height:1.55;margin:0 0 6px">Sehr geehrte Damen und Herren,</p>
+  <sc-if value="{{ v.isSteps }}" hint-placeholder-val="{{ true }}">
+    <p style="font-size:12.5px;line-height:1.55;margin:0 0 6px;text-wrap:pretty">ich war bei einem Beratungsgespräch bei Improfy hier in {{ v.city }} und möchte nun gerne an der Maßnahme <strong style="font-weight:700;color:#000000">„4Steps – 4 Schritte zum souveränen Start ins Berufsleben“</strong> (Maßnahmenummer {{ v.nr }}) teilnehmen. Die Maßnahme ist modular buchbar. Ich möchte gerne an folgenden Modulen teilnehmen:</p>
+    <div style="display:grid;gap:4px;margin:8px 0 10px">
+      <div style="display:flex;align-items:center;gap:12px;background:#f6f6f6;padding:6px 12px;break-inside:avoid">
+        <input type="checkbox" name="m1" data-f="m1" style="width:17px;height:17px;flex:0 0 auto;margin:0;accentColor:#4bbf7a;cursor:pointer">
+        <span style="font-size:12.5px;font-weight:700;flex:1;color:#000000">Modul 1 – Interkulturelle Kompetenzen</span>
+        <span style="font-size:11px;font-weight:700;color:#000000">30 UE · 4 Wochen</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;background:#f6f6f6;padding:6px 12px;break-inside:avoid">
+        <input type="checkbox" name="m2" data-f="m2" style="width:17px;height:17px;flex:0 0 auto;margin:0;accentColor:#4bbf7a;cursor:pointer">
+        <span style="font-size:12.5px;font-weight:700;flex:1;color:#000000">Modul 2 – Coaching kompakt</span>
+        <span style="font-size:11px;font-weight:700;color:#000000">100 UE · 8 Wochen</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;background:#f6f6f6;padding:6px 12px;break-inside:avoid">
+        <input type="checkbox" name="m3" data-f="m3" style="width:17px;height:17px;flex:0 0 auto;margin:0;accentColor:#4bbf7a;cursor:pointer">
+        <span style="font-size:12.5px;font-weight:700;flex:1;color:#000000">Modul 3 – Fit to Work</span>
+        <span style="font-size:11px;font-weight:700;color:#000000">100 UE · 8 Wochen</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;background:#f6f6f6;padding:6px 12px;break-inside:avoid">
+        <input type="checkbox" name="m4" data-f="m4" style="width:17px;height:17px;flex:0 0 auto;margin:0;accentColor:#4bbf7a;cursor:pointer">
+        <span style="font-size:12.5px;font-weight:700;flex:1;color:#000000">Modul 4 – Jobmatch</span>
+        <span style="font-size:11px;font-weight:700;color:#000000">50 UE · 6 Wochen</span>
+      </div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ v.isK16 }}" hint-placeholder-val="{{ false }}">
+    <p style="font-size:12.5px;line-height:1.55;margin:0 0 6px;text-wrap:pretty">ich hatte ein Beratungsgespräch mit Improfy in {{ v.city }} und möchte nun gerne an der Maßnahme <strong style="font-weight:700;color:#000000">„AllCare – Ganzheitliche Betreuung nach § 16k“</strong> (Maßnahmenummer {{ v.nr }}) teilnehmen.</p>
+  </sc-if>
+
+  <div style="display:grid;grid-template-columns:{{ v.tileCols }};gap:1px;background:#e6e5e6;border:1px solid #e6e5e6;margin:0 0 14px;break-inside:avoid">
+    <div style="background:#fff;padding:8px 12px">
+      <div style="font-size:9.5px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#000000;margin-bottom:5px">Wo</div>
+      <div style="font-size:12px;line-height:1.45;font-weight:700;color:#000000">Improfy GmbH<br>{{ v.addr }}</div>
+    </div>
+    <div style="background:#fff;padding:8px 12px">
+      <div style="font-size:9.5px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#000000;margin-bottom:5px">Was</div>
+      <div style="font-size:12px;line-height:1.45;font-weight:700;color:#000000">Einzelcoaching</div>
+    </div>
+    <div style="background:#fff;padding:8px 12px">
+      <div style="font-size:9.5px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#000000;margin-bottom:5px">Start</div>
+      <div style="font-size:12px;line-height:1.45;font-weight:700;color:#000000">Jederzeit Einstieg möglich</div>
+    </div>
+    <sc-if value="{{ v.isK16 }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#fff;padding:8px 12px">
+        <div style="font-size:9.5px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#000000;margin-bottom:5px">Dauer</div>
+        <div style="font-size:12px;line-height:1.45;font-weight:700;color:#000000">Individuell (Teilzeit)</div>
+      </div>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ v.isSteps }}" hint-placeholder-val="{{ true }}">
+    <p style="font-size:12.5px;line-height:1.55;margin:0 0 6px;text-wrap:pretty">Die Maßnahme ist auch spezialisiert auf die Interessen und Bedürfnisse arbeitssuchender Migranten. Sie unterstützt mich bei der Integration und bereitet mich gut auf den Arbeitsmarkt vor. Außerdem gibt es dort Pädagogen und Coaches, die neben Deutsch auch meine Sprache sprechen.</p>
+  </sc-if>
+  <sc-if value="{{ v.isK16 }}" hint-placeholder-val="{{ false }}">
+    <p style="font-size:12.5px;line-height:1.55;margin:0 0 6px;text-wrap:pretty">Die Maßnahme ist spezialisiert: AllCare begleitet mich in Form eines Sozialcoachings nachhaltig auf dem Weg zur Beschäftigungsfähigkeit. Meine konkrete Lebenssituation steht dabei im Mittelpunkt. Außerdem gibt es dort Pädagogen und Coaches, die neben Deutsch auch meine Sprache sprechen.</p>
+  </sc-if>
+  <p style="font-size:12.5px;line-height:1.55;margin:0 0 6px">Ich würde mich freuen, an der Maßnahme teilnehmen zu dürfen.</p>
+  <p style="font-size:12.5px;line-height:1.55;margin:0 0 10px">Mit freundlichen Grüßen</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:36px;margin-bottom:10px;break-inside:avoid">
+    <div><input type="text" name="sig_ortdatum" data-f="sig_ortdatum" style="width:100%;box-sizing:border-box;height:30px;border:0;border-bottom:1.5px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-top:5px">Ort, Datum</div></div>
+    <div><div style="border-bottom:1.5px solid #000000;height:28px"></div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-top:5px">Unterschrift Antragsteller*in (handschriftlich)</div></div>
+  </div>
+
+  <div style="background:#f6f6f6;border-top:3px solid #84faa1;padding:9px 12px;break-inside:avoid">
+    <div style="font-size:10px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:#000000;margin-bottom:6px">P.S. – Vollmacht</div>
+    <p style="font-size:10px;line-height:1.5;margin:0;color:#000000;text-wrap:pretty">Gleichzeitig bestätige ich mit meiner Unterschrift, dass ich die Mitarbeiter der Improfy GmbH, Rolshover Str. 45, 51105 Köln sowie deren Filialen (improfy.de/kontakt) gegenüber dem Jobcenter bzw. der Agentur für Arbeit in folgendem Umfang bevollmächtige: meinen Antrag auf einen Gutschein einreichen, personenbezogene Daten übermitteln und austauschen, Einsicht in Dokumente (notwendig für die Ausstellung eines Gutscheins). Ich kann diese Vollmacht jederzeit widerrufen, und sie ist nur gültig bis 6 Wochen nach Datum meines Antrages. Dem zuständigen Jobcenter / der zuständigen Agentur für Arbeit erlaube ich, diese Vollmacht zu verarbeiten und in meiner elektronischen Akte zu hinterlegen.</p>
+  </div>
+
+  <div slot="footer" style="display:flex;justify-content:space-between;gap:20px;border-top:1px solid #e6e5e6;padding-top:7px;font-size:9.5px;line-height:1.5;color:#000000">
+    <div>{{ v.footLeft }}</div>
+    <div>{{ v.footRight }}</div>
+  </div>
+</doc-page>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const CITIES = {
+  koeln: { name: 'Köln', addr: 'Rolshover Str. 45, 51105 Köln', tel: '0221.170.027.61',
+    foot: 'Improfy GmbH · Rolshover Straße 45 · 51105 Köln', nrSteps: '357/19/25', nrK16: '962/5014/24', dl: 'Koeln' },
+  hamburg: { name: 'Hamburg', addr: 'Hammerbrookstr. 90, 20097 Hamburg', tel: '040.6758.58.96',
+    foot: 'Improfy Hamburg · Hammerbrookstr. 90 · 20097 Hamburg', nrSteps: '123/8306/25', nrK16: '962/5014/24', dl: 'Hamburg' },
+  mannheim: { name: 'Mannheim', addr: 'M7 19-20, 68161 Mannheim', tel: '0621.178.515.62',
+    foot: 'Improfy Mannheim · M7 19-20 · 68161 Mannheim', nrSteps: '644/40/25', nrK16: '644/95/26', dl: 'Mannheim' },
+  frankfurt: { name: 'Frankfurt am Main', addr: 'Elbestr. 48, 60329 Frankfurt am Main', tel: '069.955.079.57',
+    foot: 'Improfy Frankfurt · Elbestr. 48 · 60329 Frankfurt am Main', nrSteps: '419/405/25', nrK16: '962/5014/24', dl: 'Frankfurt' }
+};
+
+class Component extends DCLogic {
+  state = { prog: 'steps', city: 'koeln', busy: false };
+
+  // doc-page measures its header/footer spacers when it connects — which in a
+  // DC is before the slotted children exist. Nudge it once they do.
+  remeasure() {
+    const dp = document.querySelector('doc-page');
+    if (dp && typeof dp._measure === 'function') dp._measure();
+  }
+  // doc-page.js loads asynchronously from <helmet>, so wait for the element to
+  // be upgraded before nudging it — and retry, because fonts and the logo can
+  // change the header height after that.
+  ready() {
+    if (window.customElements && customElements.whenDefined) {
+      return customElements.whenDefined('doc-page');
+    }
+    return Promise.resolve();
+  }
+  // Event-driven: whenever the slotted header/footer change size (streaming,
+  // late fonts, logo decode, variant switch) doc-page re-measures its spacers.
+  attachObserver() {
+    if (this._ro) return true;
+    const dp = document.querySelector('doc-page');
+    if (!dp || typeof dp._measure !== 'function' || !window.ResizeObserver) return false;
+    const hdr = dp.querySelector('[slot="header"]');
+    const ftr = dp.querySelector('[slot="footer"]');
+    if (!hdr || !ftr) return false;
+    this._ro = new ResizeObserver(() => dp._measure());
+    this._ro.observe(hdr);
+    this._ro.observe(ftr);
+    dp._measure();
+    return true;
+  }
+  scheduleRemeasure() {
+    this.ready().then(() => this.remeasure());
+    if (this._guard) return;
+    let tries = 0;
+    this._guard = setInterval(() => {
+      const ok = this.attachObserver();
+      this.remeasure();
+      if (++tries > 40 || (ok && tries > 4)) { clearInterval(this._guard); this._guard = null; }
+    }, 150);
+  }
+  componentDidUpdate() {
+    this.attachObserver();
+    this.remeasure();
+  }
+
+  componentDidMount() {
+    this.restore();
+    this.scheduleRemeasure();
+    this.onInput = () => this.persist();
+    document.addEventListener('input', this.onInput);
+    document.addEventListener('change', this.onInput);
+  }
+  componentWillUnmount() {
+    if (this._ro) { this._ro.disconnect(); this._ro = null; }
+    if (this._guard) { clearInterval(this._guard); this._guard = null; }
+    document.removeEventListener('input', this.onInput);
+    document.removeEventListener('change', this.onInput);
+  }
+
+  storeKey() { return 'improfy-antrag-' + this.state.prog + '-' + this.state.city; }
+  fields() { return Array.from(document.querySelectorAll('[data-f]')); }
+
+  persist() {
+    const data = {};
+    this.fields().forEach(el => { data[el.dataset.f] = el.type === 'checkbox' ? el.checked : el.value; });
+    try { localStorage.setItem(this.storeKey(), JSON.stringify(data)); } catch (e) {}
+  }
+  restore() {
+    let saved = {};
+    try { saved = JSON.parse(localStorage.getItem(this.storeKey()) || '{}'); } catch (e) {}
+    setTimeout(() => {
+      this.fields().forEach(el => {
+        const v = saved[el.dataset.f];
+        if (el.type === 'checkbox') el.checked = !!v; else el.value = v === undefined ? '' : v;
+      });
+    }, 0);
+  }
+  select(patch) {
+    this.persist();
+    this.setState(patch, () => { this.restore(); this.scheduleRemeasure(); });
+  }
+
+  variant() {
+    const c = CITIES[this.state.city];
+    const steps = this.state.prog === 'steps';
+    return {
+      isSteps: steps, isK16: !steps, city: c.name,
+      kicker: steps ? 'Antrag AVGS · 4Steps · ' + c.name : 'Antrag AVGS § 16k · AllCare · ' + c.name,
+      title: steps ? 'Antrag für Gutschein AVGS' : 'Antrag für Gutschein AVGS § 16k',
+      nr: steps ? c.nrSteps : c.nrK16,
+      sub: (steps ? '4Steps – 4 Schritte zum souveränen Start ins Berufsleben' : 'AllCare – Ganzheitliche Betreuung nach § 16k')
+        + ' · Maßnahmenummer ' + (steps ? c.nrSteps : c.nrK16),
+      addr: steps ? c.addr : c.addr + ', Tel. ' + c.tel,
+      tileCols: steps ? 'repeat(3,1fr)' : 'repeat(4,1fr)',
+      footLeft: c.foot,
+      footRight: (steps ? '+49 (0) 221 170 027 61' : 'Tel. ' + c.tel) + ' · service@improfy.de · improfy.de',
+      fileName: (steps ? 'Antrag-AVGS-4Steps-' : 'Antrag-16k-AllCare-') + c.dl + '-ausfuellbar.pdf',
+      docTitle: (steps ? 'Antrag AVGS – 4Steps · ' : 'Antrag AVGS § 16k – AllCare · ') + c.name
+    };
+  }
+
+  loadPdfLib() {
+    if (window.PDFLib) return Promise.resolve(window.PDFLib);
+    if (this._libP) return this._libP;
+    this._libP = new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = 'https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js';
+      s.onload = () => res(window.PDFLib);
+      s.onerror = () => rej(new Error('pdf-lib konnte nicht geladen werden'));
+      document.head.appendChild(s);
+    });
+    return this._libP;
+  }
+
+  // --- vector PDF: the document is redrawn from the live DOM, so there is no
+  // --- background image and the PDF text stays selectable.
+  async exportPdf() {
+    if (this.state.busy) return;
+    this.setState({ busy: true });
+    try {
+      const { PDFDocument, StandardFonts, rgb } = await this.loadPdfLib();
+      await this.ready();
+      this.remeasure();
+      await new Promise(r => requestAnimationFrame(() => r()));
+      const dp = document.querySelector('doc-page');
+      const sheet = dp.shadowRoot.querySelector('.sheet');
+      const sr = sheet.getBoundingClientRect();
+      const PW = 595.28, PH = 841.89;
+      const k = PW / sr.width;
+      const X = px => (px - sr.x) * k;
+      const Y = py => PH - (py - sr.y) * k;
+
+      const doc = await PDFDocument.create();
+      const v = this.variant();
+      doc.setTitle(v.docTitle);
+      const page = doc.addPage([PW, PH]);
+      const reg = await doc.embedFont(StandardFonts.Helvetica);
+      const bold = await doc.embedFont(StandardFonts.HelveticaBold);
+      const col = (str) => {
+        const m = String(str).match(/rgba?\(([^)]+)\)/);
+        if (!m) return { c: rgb(0, 0, 0), a: 1 };
+        const p = m[1].split(',').map(n => parseFloat(n));
+        return { c: rgb(p[0] / 255, p[1] / 255, p[2] / 255), a: p.length > 3 ? p[3] : 1 };
+      };
+      const skip = (el) => el.closest('[data-export]') !== null;
+
+      // 1) fills, rules and borders
+      Array.from(dp.querySelectorAll('*')).forEach(el => {
+        if (skip(el)) return;
+        const cs = getComputedStyle(el);
+        if (cs.display === 'none' || cs.visibility === 'hidden') return;
+        const r = el.getBoundingClientRect();
+        if (!r.width || !r.height) return;
+        const bg = col(cs.backgroundColor);
+        if (bg.a > 0.02 && el.tagName !== 'INPUT') {
+          page.drawRectangle({ x: X(r.x), y: Y(r.bottom), width: r.width * k, height: r.height * k, color: bg.c });
+        }
+        [['Top', r.x, r.y, r.width, 0], ['Bottom', r.x, r.bottom, r.width, 0],
+         ['Left', r.x, r.y, 0, r.height], ['Right', r.right, r.y, 0, r.height]].forEach(([side, bx, by, bw, bh]) => {
+          const w = parseFloat(cs['border' + side + 'Width']);
+          if (!w) return;
+          const bc = col(cs['border' + side + 'Color']);
+          if (bc.a < 0.02) return;
+          const t = Math.max(w * k, 0.4);
+          page.drawRectangle({
+            x: X(bx) - (bw ? 0 : t / 2), y: Y(by + (bh || 0)) - (bh ? 0 : t / 2),
+            width: bw ? bw * k : t, height: bh ? bh * k : t, color: bc.c
+          });
+        });
+      });
+
+      // 2) the logo
+      const logo = dp.querySelector('img');
+      if (logo && logo.src) {
+        try {
+          const bytes = await fetch(logo.src).then(r => r.arrayBuffer());
+          const emb = logo.src.indexOf('image/jpeg') > -1 ? await doc.embedJpg(bytes) : await doc.embedPng(bytes);
+          const r = logo.getBoundingClientRect();
+          page.drawImage(emb, { x: X(r.x), y: Y(r.bottom), width: r.width * k, height: r.height * k });
+        } catch (e) { console.warn('Logo konnte nicht eingebettet werden', e); }
+      }
+
+      // 3) text, line by line, positioned from the live layout
+      const walker = document.createTreeWalker(dp, NodeFilter.SHOW_TEXT);
+      const range = document.createRange();
+      let node;
+      while ((node = walker.nextNode())) {
+        const raw = node.nodeValue;
+        if (!raw || !/\S/.test(raw)) continue;
+        const parent = node.parentElement;
+        if (!parent || skip(parent)) continue;
+        const cs = getComputedStyle(parent);
+        if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+        const size = parseFloat(cs.fontSize) * k;
+        const font = parseInt(cs.fontWeight, 10) >= 600 ? bold : reg;
+        const color = col(cs.color).c;
+        const upper = cs.textTransform === 'uppercase';
+        const spaced = cs.letterSpacing !== 'normal' && parseFloat(cs.letterSpacing) > 0.1;
+        let frag = null;
+        const frags = [];
+        for (let i = 0; i < raw.length; i++) {
+          range.setStart(node, i);
+          range.setEnd(node, i + 1);
+          const rr = range.getBoundingClientRect();
+          const ch = upper ? raw[i].toUpperCase() : raw[i];
+          if (!rr.width && !rr.height) { if (frag) frag.text += ch; continue; }
+          const newLine = !frag || Math.abs(rr.top - frag.top) > 1;
+          if (newLine || spaced) {
+            frag = { top: rr.top, h: rr.height, x: rr.x, text: ch };
+            frags.push(frag);
+          } else {
+            frag.text += ch;
+          }
+        }
+        frags.forEach(f => {
+          const t = f.text.replace(/\s+$/, '');
+          if (!t) return;
+          const baseline = f.top + (f.h - parseFloat(cs.fontSize)) / 2 + parseFloat(cs.fontSize) * 0.79;
+          page.drawText(t, { x: X(f.x), y: Y(baseline), size, font, color });
+        });
+      }
+
+      // 4) the interactive form fields
+      const form = doc.getForm();
+      this.fields().forEach(el => {
+        const r = el.getBoundingClientRect();
+        const x = X(r.x), y = Y(r.bottom), w = r.width * k, h = r.height * k;
+        if (el.type === 'checkbox') {
+          const cb = form.createCheckBox('modul.' + el.dataset.f);
+          cb.acroField.setDefaultAppearance('/ZaDb 0 Tf 0 g');
+          cb.addToPage(page, { x, y, width: w, height: h, borderWidth: 1.5, borderColor: rgb(0, 0, 0), backgroundColor: rgb(1, 1, 1) });
+          if (el.checked) cb.check();
+        } else {
+          const tf = form.createTextField('antrag.' + el.dataset.f);
+          tf.acroField.setDefaultAppearance('/Helv 10 Tf 0 g');
+          tf.setFontSize(10);
+          if (el.value) tf.setText(el.value);
+          tf.addToPage(page, { x: x + 5, y: y + 3, width: w - 10, height: h - 4, borderWidth: 0, textColor: rgb(0, 0, 0), font: reg });
+        }
+      });
+      form.updateFieldAppearances(reg);
+
+      const bytes = await doc.save();
+      const url = URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' }));
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = v.fileName;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+    } catch (e) {
+      console.error(e);
+      alert('Export fehlgeschlagen: ' + e.message);
+    } finally {
+      this.setState({ busy: false });
+    }
+  }
+
+  renderVals() {
+    const v = this.variant();
+    const on = (b) => (b ? '#84faa1' : '#000000');
+    const fg = (b) => (b ? '#000000' : '#ffffff');
+    const p = this.state.prog, c = this.state.city;
+    return {
+      v: Object.assign(v, {
+        stepsBg: on(p === 'steps'), stepsFg: fg(p === 'steps'),
+        k16Bg: on(p === 'k16'), k16Fg: fg(p === 'k16'),
+        koelnBg: on(c === 'koeln'), koelnFg: fg(c === 'koeln'),
+        hamburgBg: on(c === 'hamburg'), hamburgFg: fg(c === 'hamburg'),
+        mannheimBg: on(c === 'mannheim'), mannheimFg: fg(c === 'mannheim'),
+        frankfurtBg: on(c === 'frankfurt'), frankfurtFg: fg(c === 'frankfurt')
+      }),
+      btnLabel: this.state.busy ? 'PDF wird erstellt …' : 'Ausfüllbares PDF laden',
+      exportPdf: () => this.exportPdf(),
+      pickSteps: () => this.select({ prog: 'steps' }),
+      pickK16: () => this.select({ prog: 'k16' }),
+      pickKoeln: () => this.select({ city: 'koeln' }),
+      pickHamburg: () => this.select({ city: 'hamburg' }),
+      pickMannheim: () => this.select({ city: 'mannheim' }),
+      pickFrankfurt: () => this.select({ city: 'frankfurt' })
+    };
+  }
+}
+</script>
+</body>
+</html>

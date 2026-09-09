@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  doc-page:not(:defined){visibility:hidden}
+  body{margin:0;font-family:Manrope,'Helvetica Neue',Arial,sans-serif;color:#000000;-webkit-font-smoothing:antialiased}
+  doc-page p,doc-page li{orphans:3;widows:3}
+  a{color:#2f8f5b}
+  a:hover{color:#1f6b42}
+  doc-page input{-webkit-print-color-adjust:exact;print-color-adjust:exact;appearance:auto}
+  doc-page input[type=text]::placeholder{color:#6b6b6b;font-weight:500}
+  @media print{
+    doc-page input[type=text]{background:#fff !important}
+    [data-export]{display:none !important}
+  }
+</style>
+<script src="./doc-page.js"></script>
+</helmet>
+<div data-export="1" style="position:fixed;right:16px;bottom:16px;z-index:50;display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+  <button type="button" onClick="{{ exportPdf }}" style="border:0;border-radius:0;background:#000000;color:#84faa1;font-family:Manrope,Arial,sans-serif;font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;padding:12px 18px;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,0.25)" style-hover="background:#1c1c1c" style-active="background:#333333">{{ btnLabel }}</button>
+  <div style="font-size:10px;font-weight:600;color:#000000;background:#84faa1;padding:4px 8px;max-width:230px;line-height:1.4">PDF mit echten Formularfeldern – in Acrobat & Browser ausfüllbar und speicherbar.</div>
+</div>
+<doc-page size="a4" margin="13mm">
+  <div slot="header" style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding-bottom:9px;border-bottom:3px solid #84faa1">
+    <img src="assets/improfy-logo-trim.png" alt="Improfy" style="height:19px;width:auto;display:block">
+    <div style="font-size:10.5px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#000000;padding-bottom:3px">Antrag AVGS · 4Steps · Köln</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:16px">
+    <div>
+      <div style="font-size:10.5px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#000000;padding-bottom:6px;border-bottom:2px solid #84faa1;margin-bottom:10px">Antragsteller*in</div>
+      <div style="display:grid;gap:6px">
+        <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">Name, Vorname</div><input type="text" name="name" data-f="name" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+        <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">Straße, Hausnummer</div><input type="text" name="strasse" data-f="strasse" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+        <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">PLZ, Stadt</div><input type="text" name="plzstadt" data-f="plzstadt" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+        <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">E-Mail</div><input type="text" name="mail" data-f="mail" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">Kundennummer</div><input type="text" name="kundennr" data-f="kundennr" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+          <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">Geburtsdatum</div><input type="text" name="geburt" data-f="geburt" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:10.5px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#000000;padding-bottom:6px;border-bottom:2px solid #84faa1;margin-bottom:10px">Empfänger</div>
+      <div style="display:grid;gap:6px">
+        <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">Jobcenter / Agentur für Arbeit</div><input type="text" name="jobcenter" data-f="jobcenter" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+        <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">Straße, Hausnummer</div><input type="text" name="jc_strasse" data-f="jc_strasse" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+        <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">PLZ, Stadt</div><input type="text" name="jc_plzstadt" data-f="jc_plzstadt" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">Ort</div><input type="text" name="ort" data-f="ort" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+          <div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-bottom:3px">Datum</div><input type="text" name="datum" data-f="datum" style="width:100%;box-sizing:border-box;height:22px;border:0;border-bottom:1px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h1 style="font-size:23px;line-height:1.15;font-weight:800;letter-spacing:-0.02em;margin:12px 0 0;color:#000000">Antrag für Gutschein AVGS</h1>
+  <div style="font-size:12px;font-weight:700;color:#000000;margin-top:6px">4Steps – 4 Schritte zum souveränen Start ins Berufsleben<span style="color:#000000;font-weight:600"> · Maßnahmenummer 357/19/25</span></div>
+  <div style="height:2px;background:#e6e5e6;margin:10px 0 12px"></div>
+
+  <p style="font-size:12.5px;line-height:1.55;margin:0 0 6px">Sehr geehrte Damen und Herren,</p>
+  <p style="font-size:12.5px;line-height:1.55;margin:0 0 6px;text-wrap:pretty">ich war bei einem Beratungsgespräch bei Improfy hier in Köln und möchte nun gerne an der Maßnahme <strong style="font-weight:700;color:#000000">„4Steps – 4 Schritte zum souveränen Start ins Berufsleben“</strong> (Maßnahmenummer 357/19/25) teilnehmen. Die Maßnahme ist modular buchbar. Ich möchte gerne an folgenden Modulen teilnehmen:</p>
+
+  <div style="display:grid;gap:4px;margin:8px 0 10px">
+    <div style="display:flex;align-items:center;gap:12px;background:#f6f6f6;padding:6px 12px;break-inside:avoid">
+      <input type="checkbox" name="m1" data-f="m1" style="width:17px;height:17px;flex:0 0 auto;margin:0;accentColor:#4bbf7a;cursor:pointer">
+      <span style="font-size:12.5px;font-weight:700;flex:1;color:#000000">Modul 1 – Interkulturelle Kompetenzen</span>
+      <span style="font-size:11px;font-weight:700;color:#000000">30 UE · 4 Wochen</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;background:#f6f6f6;padding:6px 12px;break-inside:avoid">
+      <input type="checkbox" name="m2" data-f="m2" style="width:17px;height:17px;flex:0 0 auto;margin:0;accentColor:#4bbf7a;cursor:pointer">
+      <span style="font-size:12.5px;font-weight:700;flex:1;color:#000000">Modul 2 – Coaching kompakt</span>
+      <span style="font-size:11px;font-weight:700;color:#000000">100 UE · 8 Wochen</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;background:#f6f6f6;padding:6px 12px;break-inside:avoid">
+      <input type="checkbox" name="m3" data-f="m3" style="width:17px;height:17px;flex:0 0 auto;margin:0;accentColor:#4bbf7a;cursor:pointer">
+      <span style="font-size:12.5px;font-weight:700;flex:1;color:#000000">Modul 3 – Fit to Work</span>
+      <span style="font-size:11px;font-weight:700;color:#000000">100 UE · 8 Wochen</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;background:#f6f6f6;padding:6px 12px;break-inside:avoid">
+      <input type="checkbox" name="m4" data-f="m4" style="width:17px;height:17px;flex:0 0 auto;margin:0;accentColor:#4bbf7a;cursor:pointer">
+      <span style="font-size:12.5px;font-weight:700;flex:1;color:#000000">Modul 4 – Jobmatch</span>
+      <span style="font-size:11px;font-weight:700;color:#000000">50 UE · 6 Wochen</span>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#e6e5e6;border:1px solid #e6e5e6;margin:0 0 14px;break-inside:avoid">
+    <div style="background:#fff;padding:8px 12px">
+      <div style="font-size:9.5px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#000000;margin-bottom:5px">Wo</div>
+      <div style="font-size:12px;line-height:1.45;font-weight:700;color:#000000">Improfy GmbH<br>Rolshover Str. 45, 51105 Köln</div>
+    </div>
+    <div style="background:#fff;padding:8px 12px">
+      <div style="font-size:9.5px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#000000;margin-bottom:5px">Was</div>
+      <div style="font-size:12px;line-height:1.45;font-weight:700;color:#000000">Einzelcoaching</div>
+    </div>
+    <div style="background:#fff;padding:8px 12px">
+      <div style="font-size:9.5px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#000000;margin-bottom:5px">Start</div>
+      <div style="font-size:12px;line-height:1.45;font-weight:700;color:#000000">Jederzeit Einstieg möglich</div>
+    </div>
+  </div>
+
+  <p style="font-size:12.5px;line-height:1.55;margin:0 0 6px;text-wrap:pretty">Die Maßnahme ist auch spezialisiert auf die Interessen und Bedürfnisse arbeitssuchender Migranten. Sie unterstützt mich bei der Integration und bereitet mich gut auf den Arbeitsmarkt vor. Außerdem gibt es dort Pädagogen und Coaches, die neben Deutsch auch meine Sprache sprechen.</p>
+  <p style="font-size:12.5px;line-height:1.55;margin:0 0 6px">Ich würde mich freuen, an der Maßnahme teilnehmen zu dürfen.</p>
+  <p style="font-size:12.5px;line-height:1.55;margin:0 0 10px">Mit freundlichen Grüßen</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:36px;margin-bottom:10px;break-inside:avoid">
+    <div><input type="text" name="sig_ortdatum" data-f="sig_ortdatum" style="width:100%;box-sizing:border-box;height:30px;border:0;border-bottom:1.5px solid #000000;border-radius:0;background:#fbfbfb;font-family:inherit;font-size:12.5px;font-weight:600;color:#000000;padding:0 8px 4px;outline:none" style-focus="border-bottom:2px solid #4bbf7a;background:#f2fbf5"><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-top:5px">Ort, Datum</div></div>
+    <div><div style="border-bottom:1.5px solid #000000;height:28px"></div><div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#000000;margin-top:5px">Unterschrift Antragsteller*in (handschriftlich)</div></div>
+  </div>
+
+  <div style="background:#f6f6f6;border-top:3px solid #84faa1;padding:9px 12px;break-inside:avoid">
+    <div style="font-size:10px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:#000000;margin-bottom:6px">P.S. – Vollmacht</div>
+    <p style="font-size:10px;line-height:1.5;margin:0;color:#000000;text-wrap:pretty">Gleichzeitig bestätige ich mit meiner Unterschrift, dass ich die Mitarbeiter der Improfy GmbH, Rolshover Str. 45, 51105 Köln sowie deren Filialen (improfy.de/kontakt) gegenüber dem Jobcenter bzw. der Agentur für Arbeit in folgendem Umfang bevollmächtige: meinen Antrag auf einen Gutschein einreichen, personenbezogene Daten übermitteln und austauschen, Einsicht in Dokumente (notwendig für die Ausstellung eines Gutscheins). Ich kann diese Vollmacht jederzeit widerrufen, und sie ist nur gültig bis 6 Wochen nach Datum meines Antrages. Dem zuständigen Jobcenter / der zuständigen Agentur für Arbeit erlaube ich, diese Vollmacht zu verarbeiten und in meiner elektronischen Akte zu hinterlegen.</p>
+  </div>
+
+  <div slot="footer" style="display:flex;justify-content:space-between;gap:20px;border-top:1px solid #e6e5e6;padding-top:7px;font-size:9.5px;line-height:1.5;color:#000000">
+    <div>Improfy GmbH · Rolshover Straße 45 · 51105 Köln</div>
+    <div>+49 (0) 221 170 027 61 · service@improfy.de · improfy.de</div>
+  </div>
+</doc-page>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    this.key = 'improfy-antrag-4steps-koeln';
+    let saved = {};
+    try { saved = JSON.parse(localStorage.getItem(this.key) || '{}'); } catch (e) {}
+    const fields = () => Array.from(document.querySelectorAll('[data-f]'));
+    setTimeout(() => {
+      fields().forEach(el => {
+        const v = saved[el.dataset.f];
+        if (v === undefined) return;
+        if (el.type === 'checkbox') el.checked = !!v; else el.value = v;
+      });
+    }, 0);
+    this.onInput = () => {
+      const data = {};
+      fields().forEach(el => { data[el.dataset.f] = el.type === 'checkbox' ? el.checked : el.value; });
+      try { localStorage.setItem(this.key, JSON.stringify(data)); } catch (e) {}
+    };
+    document.addEventListener('input', this.onInput);
+    document.addEventListener('change', this.onInput);
+  }
+  state = { busy: false };
+
+  // Field geometry is measured from the live layout at click time, so the
+  // PDF fields can never drift from the background sheet.
+  measureGeo() {
+    const dp = document.querySelector('doc-page');
+    const sheet = dp && dp.shadowRoot && dp.shadowRoot.querySelector('.sheet');
+    if (!sheet) throw new Error('Sheet nicht gefunden');
+    const s = sheet.getBoundingClientRect();
+    const pageW = 595.28, pageH = 841.89;
+    const k = pageW / s.width;
+    const fields = [];
+    document.querySelectorAll('[data-f]').forEach((el) => {
+      const r = el.getBoundingClientRect();
+      fields.push({
+        n: el.dataset.f,
+        t: el.type === 'checkbox' ? 'check' : 'text',
+        x: r.x - s.x, y: r.y - s.y, w: r.width, h: r.height
+      });
+    });
+    return { k, pageW, pageH, sheetH: s.height, fields };
+  }
+
+  loadPdfLib() {
+    if (window.PDFLib) return Promise.resolve(window.PDFLib);
+    if (this._libP) return this._libP;
+    this._libP = new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = 'https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js';
+      s.onload = () => res(window.PDFLib);
+      s.onerror = () => rej(new Error('pdf-lib konnte nicht geladen werden'));
+      document.head.appendChild(s);
+    });
+    return this._libP;
+  }
+
+  async exportPdf() {
+    if (this.state.busy) return;
+    this.setState({ busy: true });
+    try {
+      const PDFLib = await this.loadPdfLib();
+      const { PDFDocument, StandardFonts, rgb } = PDFLib;
+      const G = this.measureGeo();
+
+      const png = await fetch('assets/antrag-sheet-koeln.png').then(r => {
+        if (!r.ok) throw new Error('Hintergrundbild fehlt');
+        return r.arrayBuffer();
+      });
+
+      const doc = await PDFDocument.create();
+      doc.setTitle('Antrag AVGS – 4Steps · Köln');
+      const page = doc.addPage([G.pageW, G.pageH]);
+      const img = await doc.embedPng(png);
+      const imgH = G.sheetH * G.k;
+      page.drawImage(img, { x: 0, y: G.pageH - imgH, width: G.pageW, height: imgH });
+
+      const helv = await doc.embedFont(StandardFonts.Helvetica);
+      const form = doc.getForm();
+      const cur = {};
+      document.querySelectorAll('[data-f]').forEach(el => {
+        cur[el.dataset.f] = el.type === 'checkbox' ? el.checked : el.value;
+      });
+
+      G.fields.forEach(f => {
+        const x = f.x * G.k;
+        const y = G.pageH - (f.y + f.h) * G.k;
+        const w = f.w * G.k;
+        const h = f.h * G.k;
+        if (f.t === 'check') {
+          const cb = form.createCheckBox('modul.' + f.n);
+          cb.acroField.setDefaultAppearance('/ZaDb 0 Tf 0 g');
+          cb.addToPage(page, {
+            x, y, width: w, height: h,
+            borderWidth: 1.5, borderColor: rgb(0, 0, 0), backgroundColor: rgb(1, 1, 1)
+          });
+          if (cur[f.n]) cb.check();
+        } else {
+          const tf = form.createTextField('antrag.' + f.n);
+          tf.acroField.setDefaultAppearance('/Helv 10 Tf 0 g');
+          tf.setFontSize(10);
+          if (cur[f.n]) tf.setText(cur[f.n]);
+          tf.addToPage(page, {
+            x: x + 5, y: y + 3, width: w - 10, height: h - 4,
+            borderWidth: 0, backgroundColor: undefined, textColor: rgb(0, 0, 0), font: helv
+          });
+        }
+      });
+
+      form.updateFieldAppearances(helv);
+      const bytes = await doc.save();
+      const url = URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' }));
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Antrag-AVGS-4Steps-Koeln-ausfuellbar.pdf';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+    } catch (e) {
+      console.error(e);
+      alert('Export fehlgeschlagen: ' + e.message);
+    } finally {
+      this.setState({ busy: false });
+    }
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('input', this.onInput);
+    document.removeEventListener('change', this.onInput);
+  }
+  renderVals() {
+    return {
+      exportPdf: () => this.exportPdf(),
+      btnLabel: this.state.busy ? 'PDF wird erstellt …' : 'Ausfüllbares PDF laden'
+    };
+  }
+}
+</script>
+</body>
+</html>
